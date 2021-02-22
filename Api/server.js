@@ -33,6 +33,20 @@ app.get('/api/all', function(req, res) {
         });
 });
 
+app.post('/api/search', function(req, res) {
+
+    var stock = req.body.stock;
+    axios.post('https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/ajaxCompanySearch.jsp', {
+            search: stock
+        })
+        .then(function(response) {
+            console.log(response);
+        })
+
+
+
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
