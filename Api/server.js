@@ -1,52 +1,26 @@
-var bodyParser = require('body-parser');
-const axios = require('axios');
-const express = require('express')
-const app = express()
-app.use(bodyParser.urlencoded({ extended: true }));
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const companies = require("./controllers/installation.controller.js");
+const db = require("./models");
+
+const app = express();
+
+var corsOptions = {
+    origin: "http://localhost:4246"
+};
+const PORT = process.env.PORT || 4246;
+require("./routes/ turorial.routes")(app);
+db.sequelize.sync();
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
-var cors = require('cors');
-app.use(cors());
-
-
-
-var port = process.env.PORT || 8089;
-
-app.get('/api', function(req, res) {
-    axios.get('https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json')
-        .then(response => {
-            res.json({ message: response.data });
-            return response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+app.use(bodyParser.urlencoded({ extended: true }));
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to   application." });
 });
+app.post("/installation", companies.create);
 
-app.get('/api/all', function(req, res) {
-    axios.get('https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json')
-        .then(response => {
-            res.json({ message: response.data });
-            return response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
 });
-
-app.post('/api/search', function(req, res) {
-
-    var stock = req.body.stock;
-    axios.post('https://www1.nseindia.com/live_market/dynaContent/live_watch/get_quote/ajaxCompanySearch.jsp', {
-            search: stock
-        })
-        .then(function(response) {
-            console.log(response);
-        })
-
-
-
-});
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})

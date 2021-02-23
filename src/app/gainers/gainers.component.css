@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+}
+
+.marginall {
+    padding: 15px;
+}
+
+table td {
+    font-size: 12px;
+}
+
+table th {
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: capitalize;
+}
