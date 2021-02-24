@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Installation = sequelize.define("companies", {
+    const Losers = sequelize.define("losers", {
         symbol: {
             type: Sequelize.STRING
         },
@@ -38,5 +38,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    return Installation;
+    return Losers;
 };
