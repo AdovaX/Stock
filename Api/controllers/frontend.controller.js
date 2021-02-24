@@ -25,22 +25,15 @@ exports.findAll = (req, res) => {
 
 };
 exports.findOne = (req, res) => {
-    const companyname = req.query.company;
-
-    var condition = companyname ? {
-        company: {
-            [Op.like]: `%${companyname}%`
+    const company = req.body.company;
+    console.log(req.body.company);
+    Companies.findAll({
+        where: {
+            company: {
+                [Op.like]: '%' + company + '%'
+            }
         }
-    } : null;
-
-    Companies.findOne({ where: condition })
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving tutorials."
-            });
-        });
-
+    }).then(function(data) {
+        res.send(data);
+    });
 };

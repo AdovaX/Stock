@@ -26,9 +26,16 @@ constructor(private service: StockservicesService) {}
     });
   }
   searchstock(stock): void{
-    this.service.search_stock(stock.target.value).subscribe(res => {
-       const x: any = '[' + JSON.stringify(res) + ']';
-       this.companies = JSON.parse(x);
-    });
+    if (stock.target.value === ''){
+      this.name = this.service.allCompanies().subscribe(data => {
+         this.companies = data;
+       });
+    }else{
+      this.name =  this.service.search_stock(stock.target.value).subscribe(res => {
+        const x: any =   JSON.stringify(res)  ;
+        this.companies = JSON.parse(x);
+        console.log(x);
+     });
+    }
    }
 }
