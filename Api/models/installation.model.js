@@ -1,39 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
     const Installation = sequelize.define("companies", {
-        symbol: {
+        company: {
             type: Sequelize.STRING
         },
-        series: {
+        Industry: {
             type: Sequelize.STRING
         },
-        openPrice: {
+        Symbol: {
             type: Sequelize.STRING
         },
-        highPrice: {
+        Series: {
             type: Sequelize.STRING
         },
-        lowPrice: {
-            type: Sequelize.STRING
-        },
-        ltp: {
-            type: Sequelize.STRING
-        },
-        previousPrice: {
-            type: Sequelize.STRING
-        },
-        netPrice: {
-            type: Sequelize.STRING
-        },
-        tradedQuantity: {
-            type: Sequelize.STRING
-        },
-        turnoverInLakhs: {
-            type: Sequelize.STRING
-        },
-        lastCorpAnnouncementDate: {
-            type: Sequelize.STRING
-        },
-        lastCorpAnnouncement: {
+        ISIN: {
             type: Sequelize.STRING
         }
     });

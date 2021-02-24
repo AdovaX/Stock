@@ -1,6 +1,9 @@
 const db = require("../models");
 const axios = require('axios');
-const { losers } = require("../models");
+const papa = require("papaparse");
+const request = require("request");
+let n = 1;
+const options = { /* options */ };
 
 const Companies = db.companies;
 const Gainers = db.gainers;
@@ -37,27 +40,43 @@ exports.create = (req, res) => {
 };
 
 function get_companies() {
-    const URL = 'https://www1.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json';
-    axios.get(URL)
-        .then(function(response) {
-            // handle success
-            let result = response.data;
-            //console.log(result.data);
-            Companies.bulkCreate(result.data)
-                .then(data => {
-                    console.log("Installation completed ! Comapnies are added.");
-                })
-                .catch(err => {
-                    console.log(err);
+
+    const dataStream = request.get("https://www1.nseindia.com/content/indices/ind_nifty100list.csv");
+    const parseStream = papa.parse(papa.NODE_STREAM_INPUT, options);
+
+    dataStream.pipe(parseStream);
+
+    let data = [];
+    let nse = [];
+    parseStream.on("data", chunk => {
+        data.push(chunk);
+    });
+
+    parseStream.on("finish", () => {
+
+        data.forEach(element => {
+            if (n == 1) {
+                console.log("skipping cols");
+            } else {
+                nse.push({
+                    company: element[0],
+                    Industry: element[1],
+                    Symbol: element[2],
+                    Series: element[3],
+                    ISIN: element[4]
                 });
-        })
-        .catch(function(error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function() {
-            // always executed
+            }
+            n++;
         });
+        Companies.bulkCreate(nse)
+            .then(data => {
+                console.log("Installation completed ! comapnies are added.");
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    });
 }
 
 function get_gainers() {

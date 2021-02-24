@@ -14,37 +14,29 @@
 
     <table mat-table [dataSource]="companies" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="symbol">
+        <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef> No </th>
+            <td mat-cell *matCellDef="let element; let i = index">{{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Company Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.company}} </td>
+        </ng-container>
+        <ng-container matColumnDef="industry">
+            <th mat-header-cell *matHeaderCellDef> Industry</th>
+            <td mat-cell *matCellDef="let element"> {{element.Industry}} </td>
+        </ng-container>
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.Symbol}} </td>
         </ng-container>
         <ng-container matColumnDef="series">
-            <th mat-header-cell *matHeaderCellDef> Company series </th>
-            <td mat-cell *matCellDef="let element"> {{element.series}} </td>
+            <th mat-header-cell *matHeaderCellDef> Series </th>
+            <td mat-cell *matCellDef="let element"> {{element.Series}} </td>
         </ng-container>
-        <ng-container matColumnDef="openPrice">
-            <th mat-header-cell *matHeaderCellDef> openPrice </th>
-            <td mat-cell *matCellDef="let element"> {{element.openPrice}} </td>
-        </ng-container>
-        <ng-container matColumnDef="highPrice">
-            <th mat-header-cell *matHeaderCellDef> highPrice </th>
-            <td mat-cell *matCellDef="let element"> {{element.highPrice}} </td>
-        </ng-container>
-        <ng-container matColumnDef="lowPrice">
-            <th mat-header-cell *matHeaderCellDef> lowPrice </th>
-            <td mat-cell *matCellDef="let element"> {{element.lowPrice}} </td>
-        </ng-container>
-        <ng-container matColumnDef="tradedQuantity">
-            <th mat-header-cell *matHeaderCellDef> tradedQuantity </th>
-            <td mat-cell *matCellDef="let element"> {{element.tradedQuantity}} </td>
-        </ng-container>
-        <ng-container matColumnDef="lastCorpAnnouncement">
-            <th mat-header-cell *matHeaderCellDef> lastCorpAnnouncement </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastCorpAnnouncement}} </td>
-        </ng-container>
-        <ng-container matColumnDef="lastCorpAnnouncementDate">
-            <th mat-header-cell *matHeaderCellDef> lastCorpAnnouncementDate </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastCorpAnnouncementDate}} </td>
+        <ng-container matColumnDef="isin">
+            <th mat-header-cell *matHeaderCellDef> ISIN </th>
+            <td mat-cell *matCellDef="let element"> {{element.ISIN}} </td>
         </ng-container>
 
 
