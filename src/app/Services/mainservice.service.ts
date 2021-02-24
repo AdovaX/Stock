@@ -21,6 +21,7 @@ export class MainserviceService {
   search_stock(stockvalue): Observable<any>{
    const link  = this.API + '/search';
    const data = {search: stockvalue};
+   console.log(data);
    return this.http.post(link, data);
     }
 }

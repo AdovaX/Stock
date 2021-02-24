@@ -20,13 +20,15 @@ displayedColumns: string[] = ['no', 'name' , 'industry', 'symbol' , 'series' , '
 constructor(private service: StockservicesService) {}
   ngOnInit(): void {
     this.name = this.service.allCompanies().subscribe(data => {
-    //  console.log(JSON.stringify(data.message));
+      // console.log(JSON.stringify(data));
       this.companies = data;
+     // console.log(data);
     });
   }
   searchstock(stock): void{
-    //  this.service.search_stock(stock.target.value).subscribe(res => {
-    //   console.log(res);
-    // });
+    this.service.search_stock(stock.target.value).subscribe(res => {
+       const x: any = '[' + JSON.stringify(res) + ']';
+       this.companies = JSON.parse(x);
+    });
    }
 }

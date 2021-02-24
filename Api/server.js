@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 app.post("/installation", companies.create);
 app.get("/gainers", gainers.lists);
 app.get("/allcompanies", frontend.findAll);
+app.post("/search", frontend.findOne);
 
 
 app.listen(PORT, () => {

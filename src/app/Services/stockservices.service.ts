@@ -12,4 +12,9 @@ export class StockservicesService {
     const link  = this.API + '/allcompanies';
     return this.http.get(link);
    }
+   search_stock(stockvalue): Observable<any>{
+    const link  = this.API + '/search';
+    const data = {company: stockvalue};
+    return this.http.post(link, data);
+     }
 }
