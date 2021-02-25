@@ -3,15 +3,10 @@ table {
 }
 
 .marginall {
-    padding: 15px;
+    padding: 20px;
 }
 
-table td {
-    font-size: 12px;
-}
-
-table th {
-    font-weight: bold;
-    font-size: 14px;
-    text-transform: capitalize;
+.center {
+    display: block;
+    margin: auto;
 }

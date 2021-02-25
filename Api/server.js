@@ -13,7 +13,7 @@ var corsOptions = {
 };
 app.use(cors());
 const PORT = process.env.PORT || 4247;
-require("./routes/ turorial.routes")(app);
+//require("./routes/ turorial.routes")(app);
 db.sequelize.sync();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,9 +21,11 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to   application." });
 });
 app.post("/installation", companies.create);
-app.get("/gainers", gainers.lists);
+app.get("/gainers", frontend.gainers);
+app.get("/losers", frontend.losers);
 app.get("/allcompanies", frontend.findAll);
 app.post("/search", frontend.findOne);
+app.post("/Datasearch", frontend.Datasearch);
 
 
 app.listen(PORT, () => {

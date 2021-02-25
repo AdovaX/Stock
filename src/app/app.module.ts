@@ -10,12 +10,16 @@ import { AppComponent } from './app.component';
 import {MatTableModule} from '@angular/material/table';
 import { GainersComponent } from './gainers/gainers.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import { LosersComponent } from './losers/losers.component';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GainersComponent,
-    DashboardComponent
+    DashboardComponent,
+    LosersComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,

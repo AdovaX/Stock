@@ -1,0 +1,29 @@
+<section class="marginall">
+    <table mat-table [dataSource]="companies" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Company Name. </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+        <ng-container matColumnDef="openPrice">
+            <th mat-header-cell *matHeaderCellDef> openPrice </th>
+            <td mat-cell *matCellDef="let element"> {{element.openPrice}} </td>
+        </ng-container>
+        <ng-container matColumnDef="highPrice">
+            <th mat-header-cell *matHeaderCellDef> highPrice </th>
+            <td mat-cell *matCellDef="let element"> {{element.highPrice}} </td>
+        </ng-container>
+        <ng-container matColumnDef="lowPrice">
+            <th mat-header-cell *matHeaderCellDef> lowPrice </th>
+            <td mat-cell *matCellDef="let element"> {{element.lowPrice}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tradedQuantity">
+            <th mat-header-cell *matHeaderCellDef> tradedQuantity </th>
+            <td mat-cell *matCellDef="let element"> {{element.tradedQuantity}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</section>

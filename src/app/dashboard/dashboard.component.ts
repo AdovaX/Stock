@@ -16,8 +16,7 @@ name: any;
 searchdata: any;
 companies = [];
 n: any = 0;
-displayedColumns: string[] = ['no', 'name' , 'industry', 'symbol' , 'series' , 'isin'];
-constructor(private service: StockservicesService) {}
+ constructor(private service: StockservicesService) {}
   ngOnInit(): void {
     this.name = this.service.allCompanies().subscribe(data => {
       // console.log(JSON.stringify(data));
@@ -33,8 +32,7 @@ constructor(private service: StockservicesService) {}
     }else{
       this.name =  this.service.search_stock(stock.target.value).subscribe(res => {
         const x: any =   JSON.stringify(res)  ;
-        this.companies = JSON.parse(x);
-        console.log(x);
+        this.companies = JSON.parse(x); 
      });
     }
    }

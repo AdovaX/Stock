@@ -2,12 +2,15 @@ const db = require("../models");
 const axios = require('axios');
 const papa = require("papaparse");
 const request = require("request");
+const cheerio = require('cheerio');
+const { element } = require("protractor");
 let n = 1;
 const options = { /* options */ };
 
 const Companies = db.companies;
 const Gainers = db.gainers;
 const Losers = db.losers;
+const CData = db.CData;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
 
@@ -22,25 +25,9 @@ exports.create = (req, res) => {
         get_losers();
     });
     res.send("Installation completed.");
-
-    // const companies = {
-    //     name: req.body.name,
-    //     code: req.body.code,
-    //     stockPrice: req.body.stockPrice
-    // };
-    // Companies.create(companies)
-    //     .then(data => {
-    //         res.send(data);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message: err.message || "Some error occurred while creating the Tutorial."
-    //         });
-    //     });
 };
 
 function get_companies() {
-
     const dataStream = request.get("https://www1.nseindia.com/content/indices/ind_nifty100list.csv");
     const parseStream = papa.parse(papa.NODE_STREAM_INPUT, options);
 
@@ -48,6 +35,7 @@ function get_companies() {
 
     let data = [];
     let nse = [];
+    let companyData = [];
     parseStream.on("data", chunk => {
         data.push(chunk);
     });
@@ -71,6 +59,74 @@ function get_companies() {
         Companies.bulkCreate(nse)
             .then(data => {
                 console.log("Installation completed ! comapnies are added.");
+            }).then(function() {
+                nse.forEach(element => {
+                    let url = 'https://www.screener.in/company/' + element.Symbol + '/consolidated/';
+
+                    axios(url)
+                        .then(response => {
+                            const html = response.data;
+                            const $ = cheerio.load(html);
+                            const statsTable = $('#top-ratios > li').text().replace(/\s/g, "");
+                            let aboutData = $('.sub > p').text().replace(/\s/g, "");
+
+                            let FaceValue_cut = statsTable.indexOf("FaceValue");
+                            let FaceValue = statsTable.slice(FaceValue_cut);
+
+                            let Roe_cut = statsTable.indexOf("ROE");
+                            let Roe = statsTable.slice(Roe_cut, FaceValue_cut);
+
+                            let Roce_cut = statsTable.indexOf("ROCE");
+                            let Roce = statsTable.slice(Roce_cut, Roe_cut);
+
+                            let DividendYield_cut = statsTable.indexOf("DividendYield");
+                            let DividendYield = statsTable.slice(DividendYield_cut, Roce_cut);
+
+                            let BookValue_cut = statsTable.indexOf("BookValue");
+                            let BookValue = statsTable.slice(BookValue_cut, DividendYield_cut);
+
+                            let StockPE_cut = statsTable.indexOf("StockP/E");
+                            let StockPE = statsTable.slice(StockPE_cut, BookValue_cut);
+
+                            let HighLow_cut = statsTable.indexOf("High/Low");
+                            let HighLow = statsTable.slice(HighLow_cut, StockPE_cut);
+
+                            let CurrentPrice_cut = statsTable.indexOf("CurrentPrice");
+                            let CurrentPrice = statsTable.slice(CurrentPrice_cut, HighLow_cut);
+
+                            let MarketCap_cut = statsTable.indexOf("MarketCap");
+                            let MarketCap = statsTable.slice(MarketCap_cut, CurrentPrice_cut);
+
+                            FaceValue = FaceValue.replace('FaceValue₹', '');
+                            BookValue = BookValue.replace('BookValue₹', '');
+                            CurrentPrice = CurrentPrice.replace('CurrentPrice₹', '');
+                            HighLow = HighLow.replace('High/Low₹', '');
+                            MarketCap = MarketCap.replace('MarketCap₹', '');
+                            StockPE = StockPE.replace('StockP/E', '');
+                            DividendYield = DividendYield.replace('DividendYield', '');
+                            Roce = Roce.replace('ROCE', '');
+                            Roe = Roe.replace('ROE', '');
+                            let data = [];
+                            data.push({
+                                Symbol: element.Symbol,
+                                FaceValue: FaceValue,
+                                BookValue: BookValue,
+                                CurrentPrice: CurrentPrice,
+                                HighLow: HighLow,
+                                MarketCap: MarketCap,
+                                StockPE: StockPE,
+                                DividendYield: DividendYield,
+                                Roce: Roce,
+                                Roe: Roe
+
+                            });
+                            CData.bulkCreate(data).then(response => {
+                                console.log("CData added");
+                            })
+                        })
+                        .catch(console.error);
+                });
+
             })
             .catch(err => {
                 console.log(err);
