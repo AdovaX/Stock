@@ -3,6 +3,18 @@ module.exports = (sequelize, Sequelize) => {
         Symbol: {
             type: Sequelize.STRING
         },
+        Company: {
+            type: Sequelize.STRING
+        },
+        Industry: {
+            type: Sequelize.STRING
+        },
+        Series: {
+            type: Sequelize.STRING
+        },
+        ISIN: {
+            type: Sequelize.STRING
+        },
         FaceValue: {
             type: Sequelize.STRING
         },
@@ -28,6 +40,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         Roe: {
+            type: Sequelize.STRING
+        },
+        About: {
             type: Sequelize.STRING
         }
     });

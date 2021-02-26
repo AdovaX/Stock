@@ -19,8 +19,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
-db.companies = require("./installation.model.js")(sequelize, Sequelize);
 db.gainers = require("./gainers.model.js")(sequelize, Sequelize);
 db.losers = require("./losers.model.js")(sequelize, Sequelize);
 db.CData = require("./companydata.model.js")(sequelize, Sequelize);

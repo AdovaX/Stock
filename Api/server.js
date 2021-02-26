@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const companies = require("./controllers/installation.controller.js");
-const gainers = require("./controllers/gainers.controller.js");
 const frontend = require("./controllers/frontend.controller.js");
 const db = require("./models");
 

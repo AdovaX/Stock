@@ -21,6 +21,12 @@ export class DetailsComponent implements OnInit {
   DividendYield: any;
   CurrentPrice: any;
   BookValue: any;
+  Industry: any;
+  Company: any;
+  Series: any;
+  ISIN: any;
+  HighLow: any;
+  About: any;
 
   constructor(private router: Router , private Service: StockservicesService) {
   this.Symbol = this.router.getCurrentNavigation().extras.state;
@@ -41,6 +47,12 @@ export class DetailsComponent implements OnInit {
       this.DividendYield = data.DividendYield;
       this.CurrentPrice = data.CurrentPrice;
       this.BookValue = data.BookValue;
+      this.About = data.About;
+      this.HighLow = data.HighLow;
+      this.ISIN = data.ISIN;
+      this.Series = data.Series;
+      this.Company = data.Company;
+      this.Industry = data.Industry; 
     });
    }
 

@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("../models");
-const Companies = db.companies;
 const Gainers = db.gainers;
 const Losers = db.losers;
 const CData = db.CData;
@@ -16,7 +15,7 @@ exports.findAll = (req, res) => {
         }
     } : null;
 
-    Companies.findAll({ where: condition })
+    CData.findAll({ where: condition })
         .then(data => {
             res.send(data);
         })
@@ -30,7 +29,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const company = req.body.company;
     console.log(req.body.company);
-    Companies.findAll({
+    CData.findAll({
         where: {
             company: {
                 [Op.like]: '%' + company + '%'

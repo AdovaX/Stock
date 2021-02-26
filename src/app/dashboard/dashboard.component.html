@@ -23,19 +23,31 @@
                                 <th>Symbol</th>
                                 <th>Company</th>
                                 <th>Industry</th>
-                                <th>Series</th>
                                 <th>ISIN</th>
-                                <th>View</th>
+                                <th>FaceValue</th>
+                                <th>BookValue</th>
+                                <th>CurrentPrice</th>
+                                <th>HighLow</th>
+                                <th>MarketCap</th>
+                                <th>StockPE</th>
+                                <th>DividendYield</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let company of companies;; let i = index ">
                                 <td>{{ i + 1 }}</td>
                                 <td>{{ company.Symbol}}</td>
-                                <td>{{ company.company}}</td>
+                                <td>{{ company.Company}}</td>
                                 <td>{{ company.Industry}}</td>
-                                <td>{{ company.Series}}</td>
                                 <td>{{ company.ISIN}}</td>
+                                <td>{{ company.FaceValue}}</td>
+                                <td>{{ company.BookValue}}</td>
+                                <td>{{ company.CurrentPrice}}</td>
+                                <td>{{ company.HighLow}}</td>
+                                <td>{{ company.MarketCap}}</td>
+                                <td>{{ company.StockPE}}</td>
+                                <td>{{ company.DividendYield}}</td>
                                 <td><a routerLink="Details" [state]='{id : company.Symbol}'>View</a></td>
                             </tr>
                         </tbody>
